@@ -3,6 +3,9 @@ import Header from "./components/Header"
 import Posts from "./pages/Posts"
 import Auth from './pages/Auth'
 import Home from "./pages/Home"
+import Add from "./pages/Add"
+import Profile from "./pages/Profile"
+import UpdatePost from "./pages/UpdatePost"
 
 function App() {
 
@@ -14,6 +17,9 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/posts" element={<Posts/>}/>
       <Route path="/auth" element={<Auth/>}/>
+      <Route path="/add" element={<Add/>}/>
+      <Route path="/profile" element={<Profile/>}/>
+      <Route path="/post/:id" element={<UpdatePost/>}/>
       
    </Routes>
    </>
