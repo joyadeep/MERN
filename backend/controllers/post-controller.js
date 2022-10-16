@@ -4,7 +4,7 @@ const User=require('../models/User');
 
 const getPosts=async(req,res)=>{
 try {
-    const posts=await Post.find();
+    const posts=await Post.find().populate("user");
     if(!posts){
         return res.status(500).json({message:"Cannot fetch posts"})
     }
@@ -26,6 +26,8 @@ const addPost=async(req,res)=>{
     if(!existingUser){
         return res.status(404).json({message:"User not found"})
     }
+    const newDate=new Date(date).toLocaleDateString();
+    console.log(newDate)
     const post=new Post({title,description,image,location,user,date});
     const session=await mongoose.startSession();
     session.startTransaction();

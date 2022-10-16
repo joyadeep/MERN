@@ -19,7 +19,7 @@ location:{
 },
 date:{
     type:Date,
-    default: new Date()
+    default: new Date().toDateString()
 },
 user:{
     type:mongoose.Types.ObjectId,
