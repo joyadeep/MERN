@@ -8,13 +8,11 @@ import PostItem from '../components/PostItem'
 const Posts = () => {
   const[posts,setPosts]=useState([])
   useEffect(()=>{
-    getAllPost().then((data)=>setPosts(data)).then(()=>console.log("DATA",posts)).catch((err)=>console.log(err))
+    getAllPost().then((data)=>setPosts(data)).catch((err)=>console.log(err))
   },[])
   return (
     <>
-    {
-      console.log("data",posts)
-    }
+    
       <Stack gap={2} sx={{py:4}}>
        {
         posts.map((item,index)=>(

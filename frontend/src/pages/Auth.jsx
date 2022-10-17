@@ -38,7 +38,6 @@ const Auth = () => {
               dispatch(login());
               navigate("/posts")
             });
-      console.log(authstate);
     }
   };
   const handleChange = (e) => {
