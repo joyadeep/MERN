@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import { Mail, NotificationsRounded } from "@mui/icons-material";
 import { useSelector,useDispatch } from "react-redux";
-import {login} from '../redux/user/userSlice'
+import {login,openAuth} from '../redux/user/userSlice'
 import UserMenu from "./UserMenu";
 import { useState } from "react";
+import Auth from "./Auth";
 const Header = () => {
   const [anchorUserMenu,setAnchorUserMenu]=useState(null)
   const dispatch=useDispatch()
@@ -52,6 +53,7 @@ const Header = () => {
               <Button
                 variant="contained"
                 disableElevation
+                onClick={()=>dispatch(openAuth())}
                 sx={{
                   textTransform: "none",
                   fontSize: 16,
@@ -64,6 +66,7 @@ const Header = () => {
           )}
         </Stack>
         <UserMenu {...{anchorUserMenu,setAnchorUserMenu}}/>
+        {/* <Auth/> */}
       </Toolbar>
     </AppBar>
   );
