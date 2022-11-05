@@ -1,13 +1,13 @@
 import { Button, Dialog, DialogContent, DialogTitle, InputLabel, TextField } from '@mui/material'
 import { useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import { closeAuth,startLoading,stopLoading } from '../redux/user/userSlice'
-import {setToast} from '../redux/global/globalSlice'
-import GoogleLogin from './GoogleLogin'
+import { closeAuth} from '../redux/user/userSlice'
+// import GoogleLogin from './GoogleLogin'
+import { login, register } from '../actions/userAction'
 
 const Auth = () => {
     const [inputs,setInputs]=useState({
-        username:'',
+        name:'',
         email:'',
         password:''
     })
@@ -19,13 +19,10 @@ const Auth = () => {
     }
     const handleSubmit=(e)=>{
         e.preventDefault();
-        dispatch(startLoading())
-        setTimeout(() => {
-            dispatch(stopLoading())
-        }, 3000);
-        dispatch(setToast({type:"error",message:"Form submitted successfully"}))
-
-        console.log(inputs);
+        {
+            isLogin?login(inputs,dispatch):register(inputs,dispatch)
+        }
+       
     }
   return (
     <Dialog open={AuthStatus} onClose={()=>dispatch(closeAuth())} >
@@ -36,8 +33,8 @@ const Auth = () => {
             <form onSubmit={handleSubmit}>
                 {
                     !isLogin && <>
-                    <InputLabel required>Username</InputLabel>
-                <TextField type={'text'} name="username" value={inputs.username} onChange={handleChange} size="small" sx={{mb:2}} fullWidth/>
+                    <InputLabel required>Name</InputLabel>
+                <TextField type={'text'} name="name" value={inputs.name} onChange={handleChange} size="small" sx={{mb:2}} fullWidth/>
 
                     </>
                 }
@@ -50,7 +47,7 @@ const Auth = () => {
                 <Button type="submit" variant='contained' size='large' sx={{textTransform:'none',fontSize:16,letterSpacing:'-1px',width:'100%',mb:2}} disableElevation>{isLogin?"Login":"Register"}</Button>
                 <Button variant='outlined' size='large' onClick={()=>setIsLogin(!isLogin)} sx={{textTransform:'none',fontSize:16,letterSpacing:'-1px',width:'100%'}}>{isLogin?"Register":"Login"}</Button>
             </form>
-            <GoogleLogin/>
+            {/* <GoogleLogin/> */}
         </DialogContent>
     </Dialog>
   )

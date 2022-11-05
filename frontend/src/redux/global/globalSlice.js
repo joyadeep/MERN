@@ -15,8 +15,7 @@ export const globalSlice=createSlice({
         },
         removeToast:(state)=>{
             state.toast.isActive=false;
-            state.toast.type='success';
-            state.toast.message='';
+            
         }
     }
 })

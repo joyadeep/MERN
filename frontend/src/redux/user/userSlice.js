@@ -1,19 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit'
 
+
 const initialState=({
-    isLoggedin:false,
     isAuthOpen:false,
     isLoading:false,
+    // currentUser:{id:'',email:'',name:'',photoURL:'',google:false}
+    currentUser:JSON.parse(localStorage.getItem('currentUser')) || null
 })
-
 export const userSlice=createSlice({
     name:"user",
     initialState,
     reducers:{
-        login:(state)=>{
-            state.isLoggedin=true
-        },
         logout:(state)=>{
+            localStorage.removeItem('currentUser')
+            state.currentUser=null;
             state.isLoggedin=false
         },
         openAuth:(state)=>{
@@ -27,9 +27,14 @@ export const userSlice=createSlice({
         },
         stopLoading:(state)=>{
             state.isLoading=false
+        },
+        updateUser:(state,action)=>{
+            localStorage.setItem('currentUser',JSON.stringify(action.payload))
+            state.currentUser=action.payload
+         
         }
 
     }
 })
-export const{login,logout,openAuth,closeAuth,startLoading,stopLoading}=userSlice.actions;
+export const{logout,openAuth,closeAuth,startLoading,stopLoading,updateUser}=userSlice.actions;
 export default userSlice.reducer;

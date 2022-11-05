@@ -1,13 +1,25 @@
 import { Logout, Settings } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { logout } from "../redux/user/userSlice";
+import axios from 'axios'
 
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
+  const userId=useSelector((state)=>state.user.currentUser);
   const dispatch=useDispatch();
     const handleCloseUserMenu = () => {
     setAnchorUserMenu(null);
   };
+  const handleAuth=async()=>{
+    try {
+      const res=await axios.get('http://localhost:5000/user/me',{
+        withCredentials:true
+      })
+      console.log(res);
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <Menu
       anchorEl={anchorUserMenu}
@@ -16,6 +28,14 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu }) => {
       onClick={handleCloseUserMenu}
     >
       <MenuItem>
+        <ListItemIcon>
+          <Settings fontSize="small" />
+        </ListItemIcon>
+        {userId?.name}
+      </MenuItem>
+      <MenuItem onClick={()=>{
+        handleAuth()
+      }}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>

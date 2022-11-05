@@ -3,28 +3,36 @@ import {
   Avatar,
   Badge,
   Button,
+  Drawer,
   IconButton,
   Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Mail, NotificationsRounded } from "@mui/icons-material";
+import { Mail, Menu, NotificationsRounded } from "@mui/icons-material";
 import { useSelector,useDispatch } from "react-redux";
-import {login,openAuth} from '../redux/user/userSlice'
+import {openAuth} from '../redux/user/userSlice'
 import UserMenu from "./UserMenu";
 import { useState } from "react";
 import Auth from "./Auth";
+import Sidebar from "./Sidebar";
 const Header = () => {
   const [anchorUserMenu,setAnchorUserMenu]=useState(null)
+  const [drawerMenu,setDrawerMenu]=useState(false);
   const dispatch=useDispatch()
-  const loginStatus = useSelector((state) => state.user.isLoggedin);
-  // const loginStatus=true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
-    <AppBar elevation={1} sx={{ bgcolor: "white", color: "black" }}>
+    <AppBar elevation={1} position='static' sx={{ bgcolor: "white", color: "black" }}>
       <Toolbar>
+        <Drawer anchor="left" open={drawerMenu} onClose={()=>setDrawerMenu(false)}>
+         <Sidebar setDrawerMenu={setDrawerMenu}/>
+        </Drawer>
+        <IconButton onClick={()=>setDrawerMenu(true)}>
+          <Menu/>
+        </IconButton>
         <Typography variant="h4" marginRight={"auto"} sx={{letterSpacing:"-2px",fontWeight:'medium',fontFamily:"monospace"}}>Trip-Share</Typography>
         <Stack flexDirection={"row"} columnGap={3} alignItems="center">
-          {loginStatus ? (
+          {user ? (
             <>
               <Badge badgeContent={1} color="secondary">
                 <NotificationsRounded />
@@ -33,23 +41,16 @@ const Header = () => {
                 <Mail />
               </Badge>
               <IconButton onClick={(e)=>{setAnchorUserMenu(e.currentTarget)}}>
-              <Avatar>J</Avatar>
+              <Avatar sx={{bgcolor:'blue'}}>
+                {
+                  user.photoURL?<img src={user.photoURL} width='48px' height='48px' sx={{objectFit:'cover'}} />:<Typography variant='h5' sx={{textTransform:'capitalize'}}>j</Typography>
+                }
+              </Avatar>
               </IconButton>
             </>
           ) : (
             <>
-              {/* if not logged in  */}
-              <Button
-                variant="outlined"
-                onClick={()=>dispatch(login())}
-                sx={{
-                  textTransform: "none",
-                  fontSize: 16,
-                  letterSpacing: "-1px",
-                }}
-              >
-                Login
-              </Button>
+             
               <Button
                 variant="contained"
                 disableElevation
@@ -60,7 +61,7 @@ const Header = () => {
                   letterSpacing: "-1px",
                 }}
               >
-                Signup
+                Login
               </Button>
             </>
           )}
