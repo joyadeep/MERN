@@ -15,6 +15,11 @@ const userSchema=new mongoose.Schema({
         required:true,
         minLength:6
     },
+    isAdmin:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
     posts: [{type:mongoose.Types.ObjectId,ref:"Post"}]
 });
 
