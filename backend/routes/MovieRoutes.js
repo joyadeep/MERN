@@ -1,5 +1,5 @@
 import express from 'express'
-import { addMovieController, deleteMovieController, getAllMovieController, getSingleMovieController, updateMovieController } from '../controller/MovieController.js';
+import { addMovieController, deleteMovieController, getAllMovieController, getRandomMovieController, getSingleMovieController, updateMovieController } from '../controller/MovieController.js';
 import verifyToken from '../middleware/verifyToken.js'
 const router=express.Router()
 
@@ -13,8 +13,11 @@ router.patch("/:id",verifyToken,updateMovieController);
 router.delete("/:id",verifyToken,deleteMovieController);
 
 //GET SINGLE MOVIE
-router.get("/:id",verifyToken,getSingleMovieController)
+router.get("/find/:id",verifyToken,getSingleMovieController)
 //GET ALL MOVIES
 router.get("/",verifyToken,getAllMovieController)
+
+//GET RANDOM MOVIE
+router.get("/random",verifyToken,getRandomMovieController)
 
 export default router;

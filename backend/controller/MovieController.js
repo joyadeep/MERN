@@ -68,4 +68,24 @@ const getAllMovieController=async(req,res)=>{
     }
 }
 
-export {addMovieController,updateMovieController,deleteMovieController,getAllMovieController,getSingleMovieController}
+const getRandomMovieController=async(req,res)=>{
+    const type=req.query.type;
+    let movie;
+    try {
+        if(type==="series"){
+            movie=await Movie.aggregate([
+                {$match:{isSeries:true}},
+                {$sample:{size:1}}
+            ]);
+        }else{
+            movie=await Movie.aggregate([
+                {$match:{isSeries:false}},
+                {$sample:{size:1}}
+            ]);
+        }
+        res.status(200).json({success:true,message:'random movie retrieved',data:movie})
+    } catch (error) {
+        res.status(500).json({success:false,message:'cannot execute get random movie'})
+    }
+}
+export {addMovieController,updateMovieController,deleteMovieController,getAllMovieController,getSingleMovieController,getRandomMovieController}
