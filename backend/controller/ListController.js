@@ -31,8 +31,8 @@ const deleteListController=async(req,res)=>{
 
 //GET LIST
 const getListController=async(req,res)=>{
-    const typeQuery=req.query.type;
-    const genreQuery=req.query.genre;
+    const typeQuery=req.query?.type;
+    const genreQuery=req.query?.genre;
     let list=[];
     try {
         if(typeQuery){
@@ -50,6 +50,7 @@ const getListController=async(req,res)=>{
         }else{
             list=await List.aggregate([{$sample:{size:10}}])
         }
+        res.status(200).json({data:list})
     } catch (error) {
         res.status(500).json({message:'cannot execute get ist controller'})
     }

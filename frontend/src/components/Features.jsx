@@ -18,7 +18,7 @@ const Features = ({type}) => {
     <Box sx={{display:'flex',flexDirection:'row',alignItems:'center',gap:2,height:'50px'}}>
      {
       type && <>
-       <Typography variant="h6" color="white">{type}</Typography>
+       <Typography variant="h6" color="white" sx={{textTransform:'capitalize'}}>{type}</Typography>
       <Select sx={{bgcolor:'white',minWidth:'100px'}} autoWidth size='small' value={category} onChange={handleChange}>
         <MenuItem value="genre">Genre</MenuItem>
         <MenuItem value="action">Action</MenuItem>
